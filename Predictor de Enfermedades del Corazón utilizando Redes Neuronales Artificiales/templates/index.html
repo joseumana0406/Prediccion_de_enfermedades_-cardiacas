@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Predicción de Enfermedades del Corazón</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+
+</head>
+<link href='https://fonts.googleapis.com/css?family=Dancing Script' rel='stylesheet'>
+<body style="background-image:url(fondo1.png);
+               background-repeat: no-repeat;
+                background-attachment: fixed;
+              background-size: cover;">
+              
+
+    <!-- Título del sitio web -->
+    <div class="container">
+      <h2 class="container-heading"><span class="heading_font" style="color:red; font-family: Arial;">Predicción de Enfermedades del Corazón</span></h2>
+      <div class="description"><br></br>
+          <p style="color:rgb(228, 206, 8);font: size 26px; font-family: Arial;">Una aplicación web de Aprendizaje Profundo, construida con ANN y Flask.</p>
+      </div>
+  </div>
+  
+
+	</div>
+
+    <!-- Área de texto -->
+	<div class="ml-container">
+
+		<form action="{{ url_for('predict') }}" method="POST">
+
+            <input class="form-input" type="text" name="age" placeholder="Ingresa tu edad"><br>
+
+            <select id="sex" name="sex" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=1>Género</option>
+                <option value=1>Hombre</option>
+                <option value=0>Mujer</option>
+            </select><br>
+
+            <select id="cp" name="cp" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=1>Tipo de dolor en el pecho</option>
+                <option value=0>Angina típica</option>
+                <option value=0>Angina atípica</option>
+                <option value=0>Asintomática</option>
+            </select><br>
+
+            <input class="form-input" type="text" name="trestbps" placeholder="Presión arterial en reposo (en mm Hg)"><br>
+
+            <input class="form-input" type="text" name="chol" placeholder="Colesterol sérico en mg/dl, por ejemplo 220"><br>
+
+            <select id="fbs" name="fbs" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=1>Azúcar en sangre en ayunas > 120 mg/dl</option>
+                <option value=1>Verdadero</option>
+                <option value=0>Falso</option>
+            </select><br>
+
+            <select id="restecg" name="restecg" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=1>Resultados electrocardiográficos en reposo</option>
+                <option value=0>Normal</option>
+                <option value=1>Anomalía en la onda ST-T</option>
+                <option value=2>Probable o definitiva hipertrofia ventricular izquierda según los criterios de Estes</option>
+            </select><br>
+
+            <input class="form-input" type="text" name="thalach" placeholder="Ritmo cardíaco máximo alcanzado, por ejemplo 170"><br>
+
+            <select id="exang" name="exang" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=1>Angina inducida por ejercicio</option>
+                <option value=1>Sí</option>
+                <option value=0>No</option>
+            </select><br>
+
+            <input class="form-input" type="text" name="oldpeak" placeholder="Depresión inducida por el ejercicio en relación al reposo, por ejemplo 1-5"><br>
+
+            <select id="slope" name="slope" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=0>Pendiente del segmento ST durante el pico del ejercicio</option>
+                <option value=0>Ascendente</option>
+                <option value=1>Plano</option>
+                <option value=2>Descendente</option>
+            </select><br>
+
+            <select id="ca" name="ca" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=1>Número de vasos principales (0-3) coloreados mediante fluoroscopía</option>
+                <option value=0>0</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+            </select><br>
+
+            <select id="thal" name="thal" style="text-align: center;
+                                        width: 358px;
+                                        height: 30px;
+                                        margin-bottom: 5px;">
+                <option value=0>Talasemia</option>
+                <option value=0>Normal</option>
+                <option value=1>Defecto fijo</option>
+                <option value=2>Defecto reversible</option>
+            </select><br>
+
+            <input type="submit" class="my-cta-button" value="Predecir"><br></br>
+
+        
+
+            <p>¿Deseas ver el <a href="https://www.kaggle.com/ronitf/heart-disease-uci?select=heart.csv" target="_blank">conjunto de datos</a>? </p><br></br>
+        </form>
+    </div>
+
+    <!-- Pie de página -->
+    </body>
+</html>
+<style>
+    html{
+	height: 100%;
+	margin: 0;
+
+}
+
+body{
+	font-family: Arial, Helvetica,sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+	height: 100%;
+	display: flex;
+
+	flex-direction: column;
+}
+
+/* Website Title */
+.container{
+    padding: 25px;
+	position: relative;
+}
+.container-heading{
+    margin: 0;
+}
+
+.heading_font{
+    color: #ffffff;
+  font-family: Georgia, serif;
+	font-size: 45px;
+	font-weight: normal;
+}
+
+.description p{
+	color: #ffffff;
+    font-style: italic;
+    font-size: 14px;
+    margin: -5px 0 0;
+}
+
+/* Text Area */
+.ml-container{
+    margin: 30px 0;
+	flex: 1 0 auto;
+}
+
+.form-input {
+	text-align: center;
+	width: 350px;
+	height: 25px;
+	margin-bottom: 5px;
+}
+
+/* Predict Button */
+.my-cta-button{
+	background: #f9f9f9;
+   	border: 3px solid #000000;
+    border-radius: 1000px;
+    box-shadow: 3px 3px #8c8c8c;
+	margin-top: 10px;
+    padding: 10px 36px;
+    color: green;
+    display: inline-block;
+   	font:  sans-serif;
+   float:center
+    text-align: center;
+}
+
+.my-cta-button:hover{
+    color: red;
+    border: 4px solid #4d089a;
+}
+
+.my-cta-button:active{
+    box-shadow: 0 0;
+
+}
+.dataset{
+  float:left
+}
+.website{
+  float:left
+}
+
+/* Contact */
+.contact-icon{
+	color: #3385ff;
+	padding: 7px;
+}
+
+.contact-icon:hover{
+	color: blue;
+}
+
+/* Footer */
+.footer{
+	flex-shrink: 0;
+	position: relative;
+	padding: 21px;
+
+}
+
+.footer-description{
+	color: #3385ff;
+	margin: 0;
+	font-size: 12px;
+}
+
+/* Result */
+.results{
+    padding: 25px 0 0;
+	flex: 1 0 auto;
+}
+
+.danger{
+    color: #ff0000;
+}
+
+.safe{
+    color: green;
+}
+.happy{
+  color:#6600cc
+}
+.sad{
+  color:#669900
+
+}
+
+.heading_font {
+      font-family: 'Dancing Script';font-size: 500px;
+      color:#313131;
+      font-size:80px;
+      font-weight: bold;
+
+      -webkit-animation:colorchange 20s infinite alternate;
+
+    }
+
+    @-webkit-keyframes colorchange {
+      0% {
+
+        color: blue;
+      }
+
+      10% {
+
+        color: #8e44ad;
+      }
+
+      20% {
+
+        color: #1abc9c;
+      }
+
+      30% {
+
+        color: #d35400;
+      }
+
+      40% {
+
+        color: yellow;
+      }
+
+      50% {
+
+        color: #34495e;
+      }
+
+      60% {
+
+        color: orange;
+      }
+
+      70% {
+
+        color: #2980b9;
+      }
+      80% {
+
+        color: #f1c40f;
+      }
+
+      90% {
+
+        color: #2980b9;
+      }
+
+      100% {
+
+        color: pink;
+      }
+    }
+
+
+
+  
+</style>
